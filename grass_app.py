@@ -18,18 +18,7 @@ class GrassApp(Resource):
     def get(self):
         grass7bin = os.getenv('GRASS_BIN')
         path = os.getenv('LD_LIBRARY_PATH')
-        startcmd = grass7bin + ' --config path'
-        try:
-            p = subprocess.Popen(startcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = p.communicate()
-        except OSError as error:
-            sys.exit("ERROR: Cannot find GRASS GIS start script"
-                     " {cmd}: {error}".format(cmd=startcmd[0], error=error))
-        if p.returncode != 0:
-            print >> sys.stderr, "ERROR: %s" % err
-            print >> sys.stderr, "ERROR: Cannot find GRASS GIS 7 start script (%s)" % startcmd
-            sys.exit(-1)
-        gisbase = out.strip(os.linesep)
+        gisbase = os.getenv('GISBASE')
         os.environ['GISBASE'] = gisbase
         # Todo: If you haven't done following in the terminal
         # Todo: e.g, $ add2virtualenv /usr/local/Cellar/grass7/7.2.0/grass-base/etc/python
