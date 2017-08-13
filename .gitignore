@@ -3,3 +3,4 @@ venv/
 .idea/
 *.tif
 *.sh
+*.pyc
